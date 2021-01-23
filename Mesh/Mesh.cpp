@@ -2,6 +2,22 @@
 //#include "../LinkedList/LinkedList.hpp"
 #include"Mesh.hpp"
 
+template<class T>
+int Mesh<T>::indexing(){
+    Node<T>*iter = this->head;
+    while(iter!=nullptr){
+        iter->getNodeItem().resetIndices();
+        iter = iter->getNext();
+    }
+    iter=nullptr;
+    iter = this->head;
+    int count = 0;
+     while(iter!=nullptr){
+        iter->getNodeItem().indexing(count);
+        iter = iter->getNext();
+    }
+    return count;
+}
 /* template<class T>
 int Mesh<T>::indexing(){
     for(Mesh<T> *iter = this; 
@@ -14,7 +30,7 @@ int Mesh<T>::indexing(){
         iter->item.indexing(count );
     }
     return count;
-} */
+} */   
 template<class T>
 void Mesh<T>::printMesh(){
     //printL(*this);
@@ -35,73 +51,37 @@ T* Mesh<T>::findContainingCell(Vector<double, 2> &target){
     return nullptr;
 }
 
-
-/* template<class T>
-    T *Mesh<T>::findContainingCell(Vector<double, 2> &target){
-    bool flag;
-    std::cout<<"Search method\n";
-    for(Mesh<T>* iter = this; iter; iter = (Mesh<T>*)iter->tail)
-        {
-            //target_triangle = iter->getItem();
-            flag = iter->getItem().contains(target);
-            if(flag==true)
-            {
-                std::cout<<"Got it\n";
-                return &iter->getItem();
-            }
-         //print(iter->operator()());
-        }
-    return nullptr;
-    //return this->operator()();
-} */
-
 template<class T>
 T *Mesh<T>::findTriangleNeighborTo(T& triangle,Edge<Vector<double,2>> &edge){
-    for(Node<T> *iter = this->head; iter; iter = iter->getNext()){
-        if(iter->getNodeItem().contains(edge)){
-            printf("GOT THE TRIANGLE\n");
-            return &iter->getNodeItem();
+    Node<T> *iter = this->head;
+    while(iter!=nullptr){
+        if(iter->getNodeItem().contains(edge) && iter->getNodeItem().isNotEqualTo(triangle)){
+            printf("Este triangulo de la lista tiene el eje objetivo y es el mismo triangulo\n");
+            return &iter->getNodeItem();   
         }
+        iter = iter->getNext();
     }
     return nullptr;
 }
-/* template<class T>
-T* Mesh<T>::findTriangleNeighborTo(T& triangle, Edge<Vector<double,2>> &edge){
-
-    for(Mesh<T>* iter = this; iter; iter = (Mesh<T>*)iter->nextNode){
-        if(iter->getItem().contains(edge) && !(iter->getItem()==triangle)){
-            printf("GOT THE TRIANGLE\n");
-            return &iter->getItem();
-        }
-    }
-    return nullptr;
-}
-template<class T>
-T* Mesh<T>::findTriangleSharing( Edge<Vector<double,2>> & edge){
-    for(Mesh<T>* iter = this; iter; iter = (Mesh<T>*)iter->nextNode){
-        if(iter->getItem().contains(edge)){
-            return &iter->getItem();
-        }
-    }
-    return nullptr;
-} */
 template<class T>
 T* Mesh<T>::findTriangleSharing(Edge<Vector<double,2>> &edge){
-    for(Node<T> *iter = this->head; iter; iter = iter->getNext()){
+    Node<T> *iter = this->head;
+    while(iter!=nullptr){
         if(iter->getNodeItem().contains(edge)){
             return &iter->getNodeItem();
         }
+        iter =  iter->getNext();
     }
     return nullptr;
 }
 template<class T>
 void Mesh<T>::removeTrianglesWith(Vertex<Vector<double,2>> &vertex){
     printf("REMOVE TRIANGLES WITH\n");
-    for(Node<T> *iter =this->head; iter; iter = iter->getNext()){
+    Node<T>*iter = this->head;
+    while(iter!=nullptr){
         if(iter->getNodeItem().hasVertex(vertex)){
-            printf("SHOOOTING\n");
             this->removeThisItem(iter->getNodeItem());
         }
+        iter = iter->getNext();
     }
-
 }

@@ -4,7 +4,7 @@
 
 template<class T>
 Triangle<T>::Triangle(){
-    std::cout<<"TRIANGLE DEFAULT CONSTRUCTOR CALLED\n";
+    //std::cout<<"TRIANGLE DEFAULT CONSTRUCTOR CALLED\n";
     index = -1;
     for(int i=0; i<nVertex; i++){
         vertex[i] = new Vertex<T>();
@@ -15,7 +15,7 @@ template<class T>
 Triangle<T>::Triangle(Vertex<T>&a,Vertex<T>&b,Vertex<T>&c)
     :index{-1}
 { 
-     std::cout<<"Triangle Copy Constructor Called"<<std::endl;
+     //std::cout<<"Triangle Copy Constructor Called"<<std::endl;
     /*if(a.noSharingCell())
     {
         std::cout<<"Sharing value for Vertex 1:  "<<a.noSharingCell()<<std::endl;
@@ -42,7 +42,7 @@ Triangle<T>::Triangle(Vertex<T>&a,Vertex<T>&b,Vertex<T>&c)
     //std::cout<<"Target Vertex adress at constructor: "<<(vertex+1)<<std::endl;
     for(int i = 0; i<nVertex; i++)
     {
-        std::cout<<"Increasing the number of sharing Cells\n";
+        //std::cout<<"Increasing the number of sharing Cells\n";
         vertex[i]->increaseSharingCells();
     }
 }
@@ -66,7 +66,7 @@ Triangle<T>::Triangle(Triangle<T>&t_in){
 }
 template<class T>
 Triangle<T>::~Triangle(){
-    std::cout<<"Triangle Destructor called\n";
+   // std::cout<<"Triangle Destructor called\n";
     for(int i=0; i<nVertex; i++)
     {
         if(vertex[i]->decreaseSharingCells())
@@ -104,9 +104,9 @@ int Triangle<T>::sharingEdge(Triangle<T> &triangle){
     }
 
 }
-template<class T>
+/* template<class T>
 bool Triangle<T>::contains(T& point){
-    /*Returns true if the a point is inside the triangle*/
+    //Returns true if the a point is inside the triangle
     T point_a = this->operator()(0)();
     T point_b = this->operator()(1)();
     T point_c = this->operator()(2)();
@@ -122,7 +122,7 @@ bool Triangle<T>::contains(T& point){
     c3 = point_cb.perdot(point_pb);
 
 
-    if(c1*c2*c3>0)
+    if(c1*c2*c3>=0)
     {
         std::cout<<"Node inside the Cell\n";
 
@@ -132,6 +132,30 @@ bool Triangle<T>::contains(T& point){
         std::cout<<"Node not inside the Cell or in the edge\n";
         return false;
     }
+} */
+template<class T>
+bool Triangle<T>::contains(T& point){
+    T point_a = this->operator()(0)();
+    T point_b = this->operator()(1)();
+    T point_c = this->operator()(2)();
+    T point_p = point;
+    T v0 = point_c-=point_a;
+    T v1 = point_b-=point_a;
+    T v2 = point_p-=point_a;
+    double dot00 = v0*v0;
+    double dot01 = v0*v1;
+    double dot02 = v0*v2;
+    double dot11 = v1*v1;
+    double dot12 = v1*v2;
+
+    double invDenom = 1.0/(dot00*dot11 - dot01*dot01);
+    double u = (dot11*dot02 - dot01*dot12)*invDenom;
+    double v = (dot00*dot12 - dot01*dot02)*invDenom;
+
+    return( (u>=0)  && (v>=0) && (u+v<1));
+
+
+
 }
 template<class T>
 bool Triangle<T>::contains(Edge<T>& edge){
@@ -144,7 +168,7 @@ bool Triangle<T>::contains(Edge<T>& edge){
             return true;
         }
     }
-    std::cout<<"DOES NOT COINTAIN EDGE\n;";
+    std::cout<<"DOES NOT COINTAIN EDGE\n";
     return false;
 }
 template<class T>
@@ -232,6 +256,32 @@ Vertex<T>& Triangle<T>::getVertexNotinEdge(Edge<T>& edgeTarget){
     }
     return nullptr; */
 }
+template<class T>
+void Triangle<T>::setIndex(int i){
+    index = i;
+}
+template<class T>
+void Triangle<T>::resetIndices(){
+    for(int i=0; i<nVertex; i++)
+        vertex[i]->setIndex(-1);
+}
+//Indexing 
+template<class T>
+void Triangle<T>::indexing(int& count)
+{
+    for(int i=0; i<nVertex; i++)
+    {
+        if(vertex[i]->getIndex()<0)
+        {
+            vertex[i]->setIndex(count++);
+        }
+    }
+}
+//Get index
+template<class T>
+int Triangle<T>::getIndex() const{
+    return index;
+}
 //******************** END METHODS **************************************************************
 // ******************* OPERATORS ****************************************************************
 template<class T>
@@ -260,9 +310,39 @@ Triangle<T>::operator=(Triangle <T>& input_cell)
 }
 template<class T>
 bool Triangle<T>::operator==(Triangle<T>& triangle){
-    if(this->getEdge(0)==triangle.getEdge(0) && this->getEdge(1)==triangle.getEdge(1) && this->getEdge(2)==triangle.getEdge(2))
+    if(this->getEdge(0)==triangle.getEdge(0) && this->getEdge(1)==triangle.getEdge(1) && this->getEdge(2)==triangle.getEdge(2)){
         return true;
+    }
 
     return false;
 }
+template<class T>
+bool Triangle<T>::operator!=(Triangle<T>& triangle){
+    return !(this->operator()(0)==triangle(0) && this->operator()(1)==triangle(1) && this->operator()(2)==triangle(2));
+
+}
+template<class T>
+bool Triangle<T>::isEqualTo(Triangle<T>& triangle){
+    if(this->getEdge(0)==triangle.getEdge(0) && this->getEdge(1)==triangle.getEdge(1) && this->getEdge(2)==triangle.getEdge(2)){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+template<class T>
+bool Triangle<T>::isNotEqualTo(Triangle<T>& triangle){
+    if(this->getEdge(0)==triangle.getEdge(0) && this->getEdge(1)==triangle.getEdge(1) && this->getEdge(2)==triangle.getEdge(2)){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
 // ******************* END OPERATORS *************************************************************
+template<class T>
+void print(const Triangle<T>& c1)
+{
+    for(int i=0; i<3; i++)
+        print(c1[i]);
+}

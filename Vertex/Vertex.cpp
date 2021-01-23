@@ -6,7 +6,7 @@
 //*********************  CONSTRUCTORS*****************************************************
 template<class T>
 Vertex<T>::Vertex(){
-    std::cout<<"Vertex Default Constructor\n";
+    //std::cout<<"Vertex Default Constructor\n";
     coords = 0;
     index = -1;
     nSharingCells = 0;
@@ -49,6 +49,11 @@ template<class T>
 int Vertex<T>::getIndex() const{
     return index;
 }
+template<class T>
+void Vertex<T>::setIndex(int _index)
+{
+    index = _index;
+}
 // ******************** END MEMBER FUNCTIONS *************************************************
 
 
@@ -85,5 +90,5 @@ bool Vertex<T>::operator==(const Vertex<T>& inputVertex){
 //**************************** DESTRUCTOR*****************************************************
 template<class T>
 Vertex<T>::~Vertex(){
-    std::cout<<"Vertex Destructor Called\n";
+    //std::cout<<"Vertex Destructor Called\n";
 }
