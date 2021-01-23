@@ -14,7 +14,7 @@ typedef Edge<POINT2D> EDGE;
 class DelaunayTriangulation2D {
 
     private:
-        LinkedList<TRIANGLE> triangleList; // List of triangles to store the triangulation
+        Mesh<TRIANGLE> triangleList; // List of triangles to store the triangulation
         Grid<EDGE> edgeGrid; // Grid of edges: location of the edges
     
     public:
@@ -22,8 +22,8 @@ class DelaunayTriangulation2D {
             std::cout<<"********* Default delaunay constructor ***** \n";
         }
         void buildEdgeGrid(int x_i, int x_f,int y_i, int y_f,int ndiv,int size);
-        void startTriangulation();
-        void legalizeEdge(TRIANGLE &, EDGE &, POINT2D);
+        void startTriangulation(std::vector<POINT2D>&);
+        void legalizeEdge(TRIANGLE &, EDGE &, POINT2D &);
 
 
 
