@@ -6,7 +6,7 @@
 template<class T> class Grid{
 
     Box<T> *grid;
-    const int SIZE;
+    int SIZE;
     int xmin,xmax,ymin,ymax;
     int ndivisions;
     double hx, hy;

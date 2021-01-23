@@ -18,6 +18,7 @@ template<class T> class Vertex{
         int noSharingCell() const;
         //SETTER AND GETTERS
         int getIndex()const;
+         void setIndex(int);
         //OPERATORS
         const T& operator()()const;
         bool operator==(const Vertex<T>&);

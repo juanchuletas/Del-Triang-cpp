@@ -29,7 +29,7 @@ template<class T> class Edge {
 template<class T>
 Edge<T>::Edge()
     :sharedEdge{0}{
-    std::cout<<"EDGE DEFAULT CONSTRUCTOR"<<std::endl;
+    //std::cout<<"EDGE DEFAULT CONSTRUCTOR"<<std::endl;
     for(int i=0; i<nNodes; i++)
     {
         edgeNode[i] = 0; 
@@ -38,20 +38,20 @@ Edge<T>::Edge()
 template<class T>
 Edge<T>::Edge(const T& a, const T& b)
         :sharedEdge{0}{
-    std::cout<<"EDGE COPY CONSTRUCTOR"<<std::endl;
+    //std::cout<<"EDGE COPY CONSTRUCTOR"<<std::endl;
     edgeNode[0] = a;
     edgeNode[1] = b;
 }
 template<class T>
 Edge<T>::Edge(Edge<T>& edgein){
-    std::cout<<"EDGE COPY CONSTRUCTOR BY EDGE"<<std::endl;
+    //std::cout<<"EDGE COPY CONSTRUCTOR BY EDGE"<<std::endl;
     sharedEdge = edgein.sharedEdge;
     edgeNode[0] = edgein.edgeNode[0];
     edgeNode[1] = edgein.edgeNode[1];
 }
 template<class T>
 Edge<T>::~Edge(){
-    std::cout<<"EDGE DESTRUCTOR"<<std::endl;
+    //std::cout<<"EDGE DESTRUCTOR"<<std::endl;
 }
 
 // ******************* OPERATORS ****************************************************************
@@ -70,7 +70,7 @@ int Edge<T>::operator==(Edge<T>& edge_in){
 template<class T>
 const Edge<T>&
 Edge<T>::operator=(const Edge<T>& in){
-    printf("Asginment operator\n");
+    //printf("Asginment operator\n");
     if(this != &in){
     sharedEdge = in.sharedEdge;
     for(int i=0; i<nNodes; i++){
@@ -89,6 +89,10 @@ void Edge<T>::setEdgeNodes(T& point_a,T& point_b){
     edgeNode[0] = point_a;
     edgeNode[1] = point_b; 
 
+}
+template <class T>
+T& Edge<T>::getEdgeNode(int i){
+    return edgeNode[i];
 }
 template<class T>
 void Edge<T>::setSharedEdge(){
@@ -130,10 +134,10 @@ enum Edge<T>::ubication Edge<T>::getUbication( T& point){
 }
 // ******************* END METHODS ***********************************************************************
 
-/*template<class T>
-void print(const Edge<T> & edge){
-    print(edge.edgeNode[0]);
-    print(edge.edgeNode[1]);
+template<class T>
+void print(Edge<T> & edge){
+    print(edge.getEdgeNode(0));
+    print(edge.getEdgeNode(1));
 
-} */
+}
 #endif // _EDGE_H_

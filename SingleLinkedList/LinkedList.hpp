@@ -23,6 +23,7 @@ template<class T> class LinkedList{
     void removeLast();
     void removeThisItem(T&);
     int getSize();
+    void printList();
     
 };
 template<class T>
@@ -100,6 +101,7 @@ void LinkedList<T>::removeThisItem(T& target){
         removeLast();
     }
     else if(head!=nullptr){
+        printf("REMOVING ITEM\n");
         Node<T> *prev;
         Node<T>* current = head;
         while(current->nextNode!=nullptr){
@@ -122,6 +124,17 @@ T& LinkedList<T>::getItem(){
 template<class T>
 int LinkedList<T>::getSize(){
     return size;
+}
+template<class T>
+void LinkedList<T>::printList(){
+    int count = 0;
+    Node<T>*temp = head;
+    while(temp!=nullptr){
+        printf("ITEM: %d\n",count+1);
+        print(temp->getNodeItem());
+        temp = temp->nextNode;
+        count++;
+    }
 }
 // ********** END LL METHODS *****************
 

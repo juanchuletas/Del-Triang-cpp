@@ -17,6 +17,10 @@ template<class T> class Triangle {
         Triangle(Triangle<T>&);
         ~Triangle();
         //METHODS
+        void setIndex(int);
+        void resetIndices();
+        void indexing(int&);
+        int getIndex()const;
         int sharingEdge(Triangle<T> &);
         bool contains(T&);
         bool contains(Edge<T>&); //Search for an edge
@@ -30,6 +34,12 @@ template<class T> class Triangle {
         Vertex<T>& operator()(int);
         Triangle<T> & operator=(Triangle<T>&);
         bool operator==(Triangle<T>&);
+        bool operator!=(Triangle<T>&);
+        bool isEqualTo(Triangle<T>&);
+        bool isNotEqualTo(Triangle<T>&);
+        const Vertex<T>& operator[](int i)const {
+        return *(vertex[i]);
+        }    
 
 
 
