@@ -35,9 +35,9 @@ Triangle<T>::Triangle(Vertex<T>&a,Vertex<T>&b,Vertex<T>&c)
     //CREATING EDGES
     //T a1 = a();
     //print(a1);
-    edge[0] = new Edge<T>{a(),b()};
-    edge[1] = new Edge<T>{b(),c()};
-    edge[2] = new Edge<T>{c(),a()};
+    edge[0] = new Edge<T>{a,b};
+    edge[1] = new Edge<T>{b,c};
+    edge[2] = new Edge<T>{c,a};
 
     //std::cout<<"Target Vertex adress at constructor: "<<(vertex+1)<<std::endl;
     for(int i = 0; i<nVertex; i++)
@@ -206,7 +206,7 @@ double Triangle<T>::computeArea(){
     return 0.5*diff;
 }
 template<class T>
-bool Triangle<T>::pointInCircumcircle(T& point){
+bool Triangle<T>::pointInCircumcircle(const T& point){
     double mat11 = this->operator()(0)()[0] - point[0];
     double mat21 = this->operator()(1)()[0] - point[0];
     double mat31 = this->operator()(2)()[0] - point[0];
@@ -238,23 +238,7 @@ Vertex<T>& Triangle<T>::getVertexNotinEdge(Edge<T>& edgeTarget){
     else if(this->getEdge(2)==edgeTarget){
         return this->operator()(1);
     }
-    
 
-    
-    /*if(this->operator()(0)!= edgeTarget(0) && this->operator()(0)!=edgeTarget(1))
-    {
-        return this->operator()(0);
-    } 
-    else if(this->operator()(1)!= edgeTarget(0) && this->operator()(1)!=edgeTarget(1)){
-        return this->operator()(1);
-    }
-    else if(this->operator()(1)!= edgeTarget(0) && this->operator()(1)!=edgeTarget(1)){
-        return this->operator()(1);
-    }
-    else if(this->operator()(2)!= edgeTarget(0) && this->operator()(2)!=edgeTarget(1)){
-        return this->operator()(2);
-    }
-    return nullptr; */
 }
 template<class T>
 void Triangle<T>::setIndex(int i){

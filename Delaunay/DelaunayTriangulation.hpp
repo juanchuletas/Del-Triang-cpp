@@ -23,7 +23,7 @@ class DelaunayTriangulation2D {
         }
         void buildEdgeGrid(int x_i, int x_f,int y_i, int y_f,int ndiv,int size);
         void startTriangulation(std::vector<POINT2D>&);
-        void legalizeEdge(TRIANGLE &, EDGE &, POINT2D &);
+        void legalizeEdge(TRIANGLE &, EDGE &, VERTEX &);
 
 
 

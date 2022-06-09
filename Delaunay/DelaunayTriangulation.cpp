@@ -48,22 +48,28 @@ void DelaunayTriangulation2D::buildEdgeGrid(int x_i, int x_f,int y_i, int y_f,in
            std::cout<<"POINT NOT INSIDE THE TRIANGLE\n";
         }
         else{
+            print(*triangle);
             print(pointSoup[i]);
             VERTEX newVertex{pointSoup[i]};
+            newVertex.setIndex(i);
             TRIANGLE t1{triangle->operator()(0),triangle->operator()(1),newVertex};
             TRIANGLE t2{triangle->operator()(1),triangle->operator()(2),newVertex};
             TRIANGLE t3{triangle->operator()(2),triangle->operator()(0),newVertex};
-
-            print(*triangle);
+            printf("Triangle 1: \n");
+            print(t1);
+            printf("Triangle 2: \n");
+            print(t1);
+            printf("Triangle 3: \n");
+            print(t1);
             triangleList.removeThisItem(*triangle);
 
             triangleList.append(t1);
             triangleList.append(t2);
             triangleList.append(t3);
            
-            legalizeEdge(t1,t1.getEdge(0),pointSoup[i]);
-            legalizeEdge(t2,t2.getEdge(0),pointSoup[i]);
-            legalizeEdge(t3,t3.getEdge(0),pointSoup[i]);
+            legalizeEdge(t1,t1.getEdge(0),newVertex);
+            legalizeEdge(t2,t2.getEdge(0),newVertex);
+            legalizeEdge(t3,t3.getEdge(0),newVertex);
         }   
     }
       triangleList.removeTrianglesWith(bigT(0));
@@ -84,7 +90,7 @@ void DelaunayTriangulation2D::buildEdgeGrid(int x_i, int x_f,int y_i, int y_f,in
 
  }
 
-void DelaunayTriangulation2D::legalizeEdge(TRIANGLE &triangle, EDGE &edge, POINT2D &point){
+void DelaunayTriangulation2D::legalizeEdge(TRIANGLE &triangle, EDGE &edge, VERTEX &point){
      printf("LEGALIZING EDGES\n");
      printf("EDGE TARGET:\n");
      print(edge.getEdgeNode(0));
@@ -94,7 +100,7 @@ void DelaunayTriangulation2D::legalizeEdge(TRIANGLE &triangle, EDGE &edge, POINT
  
     if(neighbour!=nullptr){
         printf("**I FOUND A NEIGHBOUR**\n");
-        if(neighbour->pointInCircumcircle(point)){
+        if(neighbour->pointInCircumcircle(point())){
             printf("****************** IT'S CIRCUMCIRCLE********************\n");
             print(*neighbour);
             Vertex<POINT2D> vertexTarget = neighbour->getVertexNotinEdge(edge);

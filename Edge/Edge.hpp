@@ -2,25 +2,26 @@
 #define _EDGE_H_
 #include<iostream>
 #include <cmath>
+#include "../Vertex/Vertex.cpp"
 template<class T> class Edge {
 
-    T edgeNode[2]; //T must be a vector class Vector<double, 2> edgeNode[];
+    Vertex <T> edgeNode[2]; //T must be a vector class Vector<double, 2> edgeNode[];
     const int nNodes = 2;
     int sharedEdge;
     enum ubication {LEFT,RIGHT,FRONT,BEHIND,MIDDLE,ORIGIN,DEST};
     
     public:
         Edge();
-        Edge(const T&,const T&);
+        Edge(const Vertex<T>&,const Vertex<T>&);
         Edge(Edge<T>&);
         ~Edge();
         //OPERATORS
-        T& operator()(int);
+        Vertex<T>& operator()(int);
         //Setters and Getters
         void setSharedEdge();
         int getSharedEdge();
-        void setEdgeNodes(T&,T&);
-        T& getEdgeNode(int);
+        void setEdgeNodes(Vertex<T>&,Vertex<T>&);
+        Vertex<T>& getEdgeNode(int);
         int operator==(Edge<T> &);
         const Edge<T>& operator=(const Edge<T>&);
         ubication getUbication(T&);
@@ -32,11 +33,11 @@ Edge<T>::Edge()
     //std::cout<<"EDGE DEFAULT CONSTRUCTOR"<<std::endl;
     for(int i=0; i<nNodes; i++)
     {
-        edgeNode[i] = 0; 
+        edgeNode[i] = Vertex<T>(); 
     }
 }
 template<class T>
-Edge<T>::Edge(const T& a, const T& b)
+Edge<T>::Edge(const Vertex<T>& a, const Vertex<T>& b)
         :sharedEdge{0}{
     //std::cout<<"EDGE COPY CONSTRUCTOR"<<std::endl;
     edgeNode[0] = a;
@@ -57,7 +58,7 @@ Edge<T>::~Edge(){
 // ******************* OPERATORS ****************************************************************
 
 template<class T>
-T& Edge<T>::operator()(int i){
+Vertex<T>& Edge<T>::operator()(int i){
 
 
     return edgeNode[i];
@@ -84,16 +85,17 @@ Edge<T>::operator=(const Edge<T>& in){
 
 // ******************* SETTER/GETTERS ****************************************************************
 template<class T>
-void Edge<T>::setEdgeNodes(T& point_a,T& point_b){
+void Edge<T>::setEdgeNodes(Vertex<T>& point_a,Vertex<T>& point_b){
 
     edgeNode[0] = point_a;
     edgeNode[1] = point_b; 
 
 }
 template <class T>
-T& Edge<T>::getEdgeNode(int i){
+Vertex<T> & Edge<T>::getEdgeNode(int i){
     return edgeNode[i];
 }
+
 template<class T>
 void Edge<T>::setSharedEdge(){
 

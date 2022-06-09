@@ -1,7 +1,6 @@
 #if !defined(_TRIANGLE_H_)
 #define _TRIANGLE_H_
 #include "../Edge/Edge.hpp"
-#include "../Vertex/Vertex.cpp"
 template<class T> class Triangle {
     
     
@@ -25,7 +24,7 @@ template<class T> class Triangle {
         bool contains(T&);
         bool contains(Edge<T>&); //Search for an edge
         bool isOrintedCCW();
-        bool pointInCircumcircle(T&);
+        bool pointInCircumcircle(const T&);
         double computeArea();
         bool hasVertex(Vertex<T>&);
         Edge<T>& getEdge(int);

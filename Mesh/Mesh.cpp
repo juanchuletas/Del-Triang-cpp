@@ -6,14 +6,14 @@ template<class T>
 int Mesh<T>::indexing(){
     Node<T>*iter = this->head;
     while(iter!=nullptr){
-        iter->getNodeItem().resetIndices();
+        //iter->getNodeItem().resetIndices();
         iter = iter->getNext();
     }
     iter=nullptr;
     iter = this->head;
     int count = 0;
      while(iter!=nullptr){
-        iter->getNodeItem().indexing(count);
+        //iter->getNodeItem().indexing(count);
         iter = iter->getNext();
     }
     return count;
